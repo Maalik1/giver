@@ -1,0 +1,42 @@
+
+<%= form_for [@project, @donation], html: { id: 'payment-form', class: 'form-horizontal' } do %>
+
+	<p class="alerts"></p>
+
+  <%= hidden_field_tag :reward, @reward.uuid %>
+  <%= hidden_field_tag :amount, @amount %>
+
+	<%= text_field_tag :card_number, nil, name: nil, placeholder: "Card Number", size: 20, data: { stripe: 'number' } %>
+	<%= text_field_tag :cvc, nil, name: nil, placeholder: "CVC", size: 20, data: { stripe: 'cvc' } %>
+	<%= select_month(Date.today, { prompt: 'Choose month' }, { data: { stripe: 'exp-month' } }) %>
+  <%= select_year(Date.today, { start_year: Date.today.year, prompt: 'Choose year' }, { data: { stripe: 'exp-year' } }) %>
+	<%= submit_tag 'Pay Now', class: 'submit' %>
+
+<% end %>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript"> 
+	Stripe.setPublishableKey('<%= STRIPE_PUBLIC_KEY %>'); 
+
+	var stripeResponseHandler = function(status, response) {
+    var $form = $('#payment-form');
+
+    if (response.error) {
+      $('.alerts').html('<div class="alert alert-danger">'+response.error.message+'</div>');
+      $form.find('.submit').prop('disabled', false);
+    } else {
+      var token = response.id;
+      $form.append($('<input type="hidden" name="token" />').val(token));
+      $form.get(0).submit();
+    }
+  };
+
+	jQuery(function($) {
+	  $('#payment-form').submit(function(event) {
+	    var $form = $(this);
+	    $('.submit').prop('disabled', true);
+	    Stripe.createToken($form, stripeResponseHandler);
+	    return false;
+	  });
+	});
+</script>

@@ -1,0 +1,30 @@
+= link_to 'Projects', projects_path
+
+= @project.admin_links
+
+%h1= @project.title
+= image_tag @project.photo_url
+
+= @project.blurb
+= @project.story
+= @project.challenges
+= @project.location
+= @project.starts
+= @project.ends
+= @project.goal
+
+%h3 Updates
+= link_to 'New', new_project_update_path(@project) if current_user.can_create?(@project)
+
+- @project.updates.each do |update|
+  = update.title
+  = update.content
+
+= link_to 'Donate Now', new_project_donation_path(@project)
+
+
+%h3 Rewards
+- @project.rewards.each do |reward|
+  = link_to payment_project_donations_path(@project, reward: reward.uuid), { style: 'display:block; padding:20px;' } do
+    = number_to_currency(reward.amount, :unit => "$")
+    = reward.description

@@ -1,0 +1,23 @@
+<h3>Edit Reward</h3>
+<%= form_for [@project, @reward], html: { class: 'form' } do |f| %>
+
+  <% if @reward.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reward.errors.count, "error") %> prohibited this reward from being saved:</h2>
+
+      <ul>
+      <% @reward.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <%= f.number_field :amount,   step: 'any' %>
+  <%= f.text_area    :description %>
+  <%= f.check_box    :shipping %>
+  <%= f.date_select  :delivery_date, start_year: Time.now.year, order: [:month, :day, :year] %>
+  <%= f.check_box    :limit %>
+  <%= f.number_field :limit_number %>
+  <%= f.submit       'Submit' %>
+<% end %>

@@ -1,0 +1,11 @@
+<% unless resource.errors.messages.blank? %>
+	<%= devise_error_messages! %>
+<% end %>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "form", role: "form" }) do |f| %>
+  <% if @setup %>
+    <%= render partial: 'setup', locals: { f: f } %>
+  <% else %>
+    <%= render partial: 'user', locals: { f: f } %>
+  <% end %>
+<% end %>

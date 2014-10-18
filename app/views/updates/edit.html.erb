@@ -1,0 +1,19 @@
+<h3>Edit Update</h3>
+<%= form_for [@project, @update], html: { class: 'form' } do |f| %>
+
+  <% if @update.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@update.errors.count, "error") %> prohibited this update from being saved:</h2>
+
+      <ul>
+      <% @update.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.text_field   :title %>
+  <%= f.text_area    :content %>
+  <%= f.submit       'Submit' %>
+<% end %>

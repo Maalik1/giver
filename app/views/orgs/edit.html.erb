@@ -1,0 +1,12 @@
+<h3>Add Org Details</h3>
+<%= form_for @org, html: { class: 'form' } do |f| %>
+  <%= f.file_field :photo %>
+  <%= f.text_field :name %>
+  <%= f.text_field :display_name %>
+  <%= f.text_field :ein %>
+  <%= f.text_area  :description %>
+  <%= f.text_area  :mission %>
+  <%= f.text_field :location %>
+  <%= f.check_box  :tax_exempt %>
+  <%= f.submit 'Submit' %>
+<% end %>

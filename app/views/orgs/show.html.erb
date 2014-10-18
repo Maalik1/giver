@@ -1,0 +1,23 @@
+<%= link_to 'Projects', projects_path(org: @org.slug) %>
+<%= link_to 'Admin', users_path %>
+<%= link_to 'Edit', edit_org_path(@org) %>
+<%= link_to '+ Link', new_org_link_path(@org) %>
+<%= link_to 'Destroy', @org, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<h1><%= @org.name %></h1>
+
+<p>
+<% @org.links.each do |link| %>
+	<%= link_to link.name, link.location %> : 
+	<%= link_to 'Destroy', org_link_path(@org, link), method: :delete, data: { confirm: 'Are you sure?' } %> 
+	<br>
+<% end %>
+</p>
+
+<%= (@org.tax_exempt) ? 'Donations are tax exempt' : 'Donations are NOT tax exempt' %>
+
+<img src="<%= @org.photo_url %>" alt="">
+
+<%= @org.location %>
+<%= @org.description %>
+<%= @org.mission %>

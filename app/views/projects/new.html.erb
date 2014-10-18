@@ -1,0 +1,27 @@
+<h3>Add A Project</h3>
+<%= form_for @project, html: { class: 'form' } do |f| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+      <% @project.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.select       :org_id, current_user.orgs.collect { |o| [ o.name, o.id ] } %>
+  <%= f.text_field   :title %>
+  <%= f.number_field :goal,   step: 'any' %>
+  <%= f.date_select  :starts, start_year: Time.now.year, order: [:month, :day, :year] %>
+  <%= f.date_select  :ends,   start_year: Time.now.year, order: [:month, :day, :year] %>
+  <%= f.file_field   :photo %>
+  <%= f.text_field   :video %>
+  <%= f.text_field   :blurb %>
+  <%= f.text_field   :location %>
+  <%= f.text_area    :story %>
+  <%= f.text_area    :challenges %>
+  <%= f.check_box    :active %>
+  <%= f.submit       'Submit' %>
+<% end %>

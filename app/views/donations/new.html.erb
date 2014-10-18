@@ -1,0 +1,16 @@
+
+<%= form_tag payment_project_donations_path(@project), method: 'get' do %>
+  
+  <%= number_field_tag(:amount, nil, min: 1.00, step: 0.01) %>
+
+  <hr>
+	<h3>Rewards</h3>
+	<% @project.rewards.each do |reward| %>
+	  <br><%= radio_button_tag 'reward', reward.uuid, @reward == reward.uuid %>
+	  <%= label_tag "reward_#{reward.uuid}", number_to_currency(reward.amount, :unit => "$") %>
+	<% end %>
+  
+  <p>
+		<%= submit_tag 'Submit' %>
+  </p>
+<% end %>
