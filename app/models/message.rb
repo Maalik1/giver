@@ -1,6 +1,6 @@
 class Message < ActiveRecord::Base
-	include Authority::Abilities
-	
+  include Authority::Abilities
+
   belongs_to :user
   belongs_to :project
   

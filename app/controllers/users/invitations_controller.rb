@@ -1,8 +1,8 @@
 class Users::InvitationsController < Devise::InvitationsController
 
-	before_action :check_user_privileges, only: [:new, :create] 
+  before_action :check_user_privileges, only: [:new, :create] 
 
-	def new
+  def new
     self.resource = resource_class.new
     render :new
   end
@@ -11,7 +11,7 @@ class Users::InvitationsController < Devise::InvitationsController
   def create
     self.resource = invite_resource
     if resource.errors.empty?
-	    resource.creds.create(org_id: @org.id, status: params[:admin_status])
+      resource.creds.create(org_id: @org.id, status: params[:admin_status])
       yield resource if block_given?
       if is_flashing_format? && self.resource.invitation_sent_at
         set_flash_message :notice, :send_instructions, :email => self.resource.email
@@ -24,11 +24,11 @@ class Users::InvitationsController < Devise::InvitationsController
 
 private
 	
-	def check_user_privileges
-		@org = Org.find_by_slug(params[:org]) || not_found
-		unless current_user.admin_for? @org, :admin
-			redirect_to session[:previous_url] || root_path, :alert => 'You are not authorized to complete that action.'
-		end
-	end
+  def check_user_privileges
+    @org = Org.find_by_slug(params[:org]) || not_found
+    unless current_user.admin_for? @org, :admin
+      redirect_to session[:previous_url] || root_path, :alert => 'You are not authorized to complete that action.'
+    end
+  end
 
 end

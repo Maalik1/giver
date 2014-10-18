@@ -1,6 +1,6 @@
 class Donation < ActiveRecord::Base
-	include Authority::Abilities
-	
+  include Authority::Abilities
+
   belongs_to :user
   belongs_to :project, counter_cache: true
   belongs_to :reward

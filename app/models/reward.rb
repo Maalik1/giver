@@ -1,5 +1,5 @@
 class Reward < ActiveRecord::Base
-	include Authority::Abilities
+  include Authority::Abilities
 
   belongs_to :project
 
@@ -10,7 +10,7 @@ class Reward < ActiveRecord::Base
   before_create :gen_uuid
 
   def donation_valid?(donation_amount)
-  	donation_amount.to_f >= self.amount
+    donation_amount.to_f >= self.amount
   end
   
 protected
@@ -18,5 +18,5 @@ protected
   def gen_uuid
     self.uuid = SecureRandom.uuid
   end
-  
+
 end

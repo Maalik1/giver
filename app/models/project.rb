@@ -17,11 +17,11 @@ class Project < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 255, minimum: 3 }
   validates :story, presence: true, length: { minimum: 50 }
   validates :starts,
-             date: { 
-             	       after_or_equal_to: Proc.new { Date.today },
-                     before: Proc.new { Date.today + 1.year },
-                     message: 'date must be after today and within a year' 
-                   }
+            date: { 
+                    after_or_equal_to: Proc.new { Date.today },
+                    before: Proc.new { Date.today + 1.year },
+                    message: 'date must be after today and within a year' 
+                  }
   validates :ends, date: { after: :starts, message: 'date must be after the start date' }
   validates :goal, price: true
   

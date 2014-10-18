@@ -1,6 +1,6 @@
 class Update < ActiveRecord::Base
-	include Authority::Abilities
-	
+  include Authority::Abilities
+
   belongs_to :project
 
   validates :project_id, presence: true

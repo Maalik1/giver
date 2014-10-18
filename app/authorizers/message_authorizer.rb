@@ -1,10 +1,10 @@
 class MessageAuthorizer < ApplicationAuthorizer
 
-	def readable_by?(user)
+  def readable_by?(user)
   end
 
   def creatable_by?(user)
-  	true
+    true
   end
 
   def updatable_by?(user)

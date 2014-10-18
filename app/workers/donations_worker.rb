@@ -1,9 +1,9 @@
 class DonationsWorker
-	include Sidekiq::Worker
+  include Sidekiq::Worker
 
-	def perform(user_id, project_id, reward_id, card_token, amount)
+  def perform(user_id, project_id, reward_id, card_token, amount)
 		
-		user  = User.find(user_id)
+    user  = User.find(user_id)
     cents = amount.to_i*100
 
     unless user.stripe_id.present?

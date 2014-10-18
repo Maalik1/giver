@@ -1,7 +1,7 @@
 class Link < ActiveRecord::Base
-	include Authority::Abilities
+  include Authority::Abilities
 
-	TYPES = %w(other facebook twitter instagram google youtube vimeo vine tumblr github foursquare dribbble)
+  TYPES = %w(other facebook twitter instagram google youtube vimeo vine tumblr github foursquare dribbble)
 
   belongs_to :linkable, polymorphic: true
 
