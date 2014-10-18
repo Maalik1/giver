@@ -3,12 +3,12 @@ class UpdatesController < PrivateController
   before_action :set_project
   before_action :set_update, except: [:new, :create]
 
-	def new
+  def new
     @update = @project.updates.new
     authorize_action_for @update
   end
 
-	def create 
+  def create 
     @update = @project.updates.new(update_params)
     authorize_action_for @update
     respond_to do |format|
@@ -32,7 +32,7 @@ class UpdatesController < PrivateController
     end
   end
 
-	def destroy
+  def destroy
     @update.destroy
     respond_to do |format|
       format.html { redirect_to @project }

@@ -27,7 +27,7 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 
 group :development do
-	gem 'letter_opener'
+  gem 'letter_opener'
   gem 'bullet'
   gem 'lol_dba'
   gem 'zeus'

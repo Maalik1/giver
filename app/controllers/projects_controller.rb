@@ -1,6 +1,6 @@
 class ProjectsController < PrivateController
 
-	before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:show]
   before_action :set_project, except: [:index, :new, :create]
 
   def index
@@ -10,12 +10,12 @@ class ProjectsController < PrivateController
 
   def show; end
 
-	def new
+  def new
     @project = Project.new
     authorize_action_for @project
   end
 
-	def create 
+  def create 
     @project = Project.new(project_params)
     authorize_action_for @project
     respond_to do |format|
@@ -42,7 +42,7 @@ class ProjectsController < PrivateController
     end
   end
 
-	def destroy
+  def destroy
     authorize_action_for @project
     @project.destroy
     respond_to do |format|

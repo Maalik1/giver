@@ -27,11 +27,11 @@ protected
 
   # Devise routing mods
   def after_sign_up_path_for(resource)
-  	if resource.admin?
-	    edit_org_path resource.orgs.first
-	  else
-	  	root_path
-	  end
+    if resource.admin?
+      edit_org_path resource.orgs.first
+    else
+      root_path
+    end
   end
 
   def after_sign_in_path_for(resource)
@@ -43,18 +43,18 @@ protected
   end
 
   def after_invite_path_for(resource)
-  	root_path
+    root_path
   end
 
   # Routing errors
   def not_found
-	  raise ActionController::RoutingError.new('Not Found')
-	end
+    raise ActionController::RoutingError.new('Not Found')
+  end
 
-	# Authorization Errors
+  # Authorization Errors
   def authority_forbidden(error)
-	  Authority.logger.warn(error.message)
-	  redirect_to request.referrer.presence || root_path, :alert => 'You are not authorized to complete that action.'
-	end
+    Authority.logger.warn(error.message)
+    redirect_to session[:previous_url] || root_path, :alert => 'You are not authorized to complete that action.'
+  end
 
 end

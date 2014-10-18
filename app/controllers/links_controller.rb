@@ -3,11 +3,11 @@ class LinksController < PrivateController
   before_action :set_org
   before_action :set_link, only: [:destroy] 
 
-	def new
+  def new
     @link = @org.links.new
   end
 
-	def create 
+  def create 
     @link = @org.links.new(link_params)
     respond_to do |format|
       if @link.save
@@ -18,7 +18,7 @@ class LinksController < PrivateController
     end
   end
 
-	def destroy
+  def destroy
     @link.destroy
     respond_to do |format|
       format.html { redirect_to @org }

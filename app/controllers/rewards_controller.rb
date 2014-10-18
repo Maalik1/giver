@@ -3,12 +3,12 @@ class RewardsController < PrivateController
   before_action :set_project
   before_action :set_reward, except: [:new, :create]
 
-	def new
+  def new
     @reward = @project.rewards.new
     authorize_action_for @reward
   end
 
-	def create 
+  def create 
     @reward = @project.rewards.new(reward_params)
     authorize_action_for @reward
     respond_to do |format|
@@ -32,7 +32,7 @@ class RewardsController < PrivateController
     end
   end
 
-	def destroy
+  def destroy
     @reward.destroy
     respond_to do |format|
       format.html { redirect_to @project }

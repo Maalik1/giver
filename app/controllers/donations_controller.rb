@@ -15,7 +15,7 @@ class DonationsController < PrivateController
     @donation = @project.donations.new
   end
   
-	def create 
+  def create 
     if user_signed_in?
       DonationsWorker.perform_async(current_user.id, @project.id, @reward.id, params[:token], params[:amount])
       flash[:notice] = 'Your donation has been placed. Thank you for helping.'

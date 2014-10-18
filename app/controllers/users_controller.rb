@@ -1,12 +1,12 @@
 class UsersController < PrivateController
 
-	def index
-		@users = User.all
-	end
+  def index
+    @users = User.all
+  end
 
-	def show
-		@user = User.find_by_slug(params[:id])
-	end
+  def show
+    @user = User.find_by_slug(params[:id])
+  end
 
 private
 

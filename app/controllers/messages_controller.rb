@@ -10,7 +10,7 @@ class MessagesController < PrivateController
 
   def show; end
   
-	def create 
+  def create 
     @message = @project.messages.new(message_params)
     respond_to do |format|
       if @message.save

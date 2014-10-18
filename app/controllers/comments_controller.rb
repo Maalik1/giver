@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   # Users who have donated can comment and delete their own comment
   # Admin can delete comments
   
-	def create 
+  def create 
     @comment = @project.comments.new(comment_params)
     authorize_action_for @comment
     respond_to do |format|
@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     end
   end
 
-	def destroy
+  def destroy
     authorize_action_for @comment
     @comment.destroy
     respond_to do |format|

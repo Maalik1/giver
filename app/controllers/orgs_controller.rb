@@ -1,20 +1,20 @@
 class OrgsController < PrivateController
 
-	authorize_actions_for Org
+  authorize_actions_for Org
 
-	before_action :set_org, except: [:index, :new, :create]
+  before_action :set_org, except: [:index, :new, :create]
 
-	def index
-		@orgs = Org.all
-	end
+  def index
+    @orgs = Org.all
+  end
 
-	def show; end
+  def show; end
 
-	def new
+  def new
     @org = Org.new
-	end
+  end
 
-	def create 
+  def create 
     @org = Org.new(project_params)
     respond_to do |format|
       if @org.save
@@ -25,12 +25,12 @@ class OrgsController < PrivateController
     end
   end
 
-	def edit
-		authorize_action_for @org
-	end
+  def edit
+    authorize_action_for @org
+  end
 
-	def update
-		authorize_action_for @org
+  def update
+    authorize_action_for @org
     respond_to do |format|
       if @org.update(org_params)
         format.html { redirect_to @org, notice: 'Your organization\'s details have been updated.' }
@@ -41,7 +41,7 @@ class OrgsController < PrivateController
   end
 
   def destroy
-  	authorize_action_for @org
+    authorize_action_for @org
     @org.destroy
     respond_to do |format|
       format.html { redirect_to orgs_path }
