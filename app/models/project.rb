@@ -32,11 +32,11 @@ class Project < ActiveRecord::Base
   geocoded_by    :location
 
   def running?
-  	Date.today >= self.starts and Date.today <= self.ends
+    Date.today >= self.starts and Date.today <= self.ends
   end
 
   def days_to_go
-  	(self.ends - Date.today).to_i
+    (self.ends - Date.today).to_i
   end
 
   def raised

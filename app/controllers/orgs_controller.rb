@@ -1,7 +1,7 @@
 class OrgsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show, :projects, :location]
-  before_action :set_org, except: [:index, :new, :create]
+  before_action :set_org,            except: [:index, :new, :create]
 
   layout 'org', except: [:index, :new]
 

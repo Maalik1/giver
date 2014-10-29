@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 
   # Check if user has any admin rights
   def admin?
-  	return true if admin
+    return true if admin
     self.creds.admins.present?
   end
 
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   # Check if user has credentials for this Org 
   # And optionally check admin role
   def creds_for?(org, role=nil)
-  	return true if admin
+    return true if admin
 
     cred = self.creds.find_by_org_id(org.id)
     return false unless cred
@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
   end
 
   def is_customer?
-  	stripe_id.present?
+    stripe_id.present?
   end
 
   # Check if user has donated to a project
@@ -70,18 +70,18 @@ class User < ActiveRecord::Base
   end
 
   def admin_status_for(org)
-  	creds = self.creds.find_by_org_id(org.id)
-  	creds.status
+    creds = self.creds.find_by_org_id(org.id)
+    creds.status
   end
 
   def self.create_from_name_and_email(name, email)
-  	return false if exists?(email: email)
+    return false if exists?(email: email)
 
-  	password = Devise.friendly_token.first(8)
+    password = Devise.friendly_token.first(8)
     user     = create(name: name, email: email, password: password)
     UserMailer.new_donor_email(email, password).deliver if user
 
-	  user
+    user
   end
 
 protected

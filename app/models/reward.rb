@@ -16,11 +16,11 @@ class Reward < ActiveRecord::Base
   end
 
   def num_available
-  	self.limit_number - self.donations.count
+    self.limit_number - self.donations.count
   end
 
   def available?
-  	self.limit_number > self.donations.count
+    self.limit_number > self.donations.count
   end
   
 protected

@@ -1,8 +1,8 @@
 class ProjectsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show, :short_link]
-  before_action :set_project, except: [:index, :new, :create]
-  before_action :set_index, only: :index
+  before_action :set_project,        except: [:index, :new, :create]
+  before_action :set_index,          only: :index
 
   layout 'project', except: [:index, :new]
 

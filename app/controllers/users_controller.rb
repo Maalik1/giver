@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   
   before_action :authenticate_user!
-	before_action :set_user, only: [:edit, :update, :donations, :creditcard, :update_creditcard]
-	before_action :set_customer, only: [:creditcard, :update_creditcard]
-	before_action :set_card, only: [:creditcard]
+  before_action :set_user,          only: [:edit, :update, :donations, :creditcard, :update_creditcard]
+  before_action :set_customer,      only: [:creditcard, :update_creditcard]
+  before_action :set_card,          only: [:creditcard]
   
   layout 'user', except: [:index]
 
