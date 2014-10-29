@@ -1,0 +1,10 @@
+.row
+  .col-sm-4.col-sm-offset-4
+    .module
+      .section
+        %h3.top Forgot your password?
+        = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+          = devise_error_messages!
+          %p= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'your.friend@example.com'
+          %p= f.submit "Send me reset password instructions", class: 'btn btn-primary'
+        = render "users/shared/links"

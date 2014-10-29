@@ -1,0 +1,19 @@
+defaults: &defaults
+  app:
+    name: Giver.io
+    domain: giver.io
+    url: https://example.com
+  contact:
+    from: example@giver.io
+    support: support@giver.io
+  appearance:
+  formats:
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

@@ -7,7 +7,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
     if(params.has_key?(:setup))
-      resource.orgs << Org.new(name: params[:org_name])
+      resource.admin = true
+      # resource.orgs << Org.new(name: params[:org_name])
     end
     if resource.save
       if resource.active_for_authentication?

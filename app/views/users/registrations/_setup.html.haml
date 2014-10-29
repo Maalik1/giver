@@ -1,0 +1,10 @@
+= hidden_field_tag :setup, true if @setup
+
+.well You will be set up as the site admin. You will be able to invite more admin later.
+
+.form-group= f.text_field :name, class: 'form-control first-name', placeholder: 'Your Name'
+.form-group= f.email_field :email, class: 'form-control email', placeholder: 'Your Email'
+.form-group= f.password_field :password, class: 'form-control password', placeholder: 'Password'
+.form-group= f.password_field :password_confirmation, class: 'form-control password-conf', placeholder: 'Retype Password'
+
+%p= f.submit 'Create Account', class: 'btn btn-primary'

@@ -1,0 +1,9 @@
+- if @org.photo.present?
+  .section.full
+    = image_tag @org.photo.large.url
+.section
+  %h3.top Description
+  = simple_format @org.description
+.section
+  %h3.top Mission
+  = simple_format @org.mission

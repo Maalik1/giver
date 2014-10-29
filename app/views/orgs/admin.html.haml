@@ -1,0 +1,19 @@
+.section
+  %h3.top= "#{@org.name} Admin"    
+  %table.table.table-bordered
+    %thead
+      %tr 
+        %th User
+        %th Email
+        %th Status
+    %tbody
+    - User.admins.find_each do |user|
+      %tr 
+        %td= link_to user.name, user
+        %td= user.email
+        %td Site Admin
+    - @org.users.each do |user|
+      %tr 
+        %td= link_to user.name, user
+        %td= user.email
+        %td= user.admin_status_for @org

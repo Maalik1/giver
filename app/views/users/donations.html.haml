@@ -1,0 +1,22 @@
+.module
+  .section
+    %h3.top Donations
+
+    - if @user.donations.present?
+      %table.table.table-bordered
+        %thead
+          %tr 
+            %th Project
+            %th Date
+            %th Amount
+            %th Helped Raise
+        %tbody
+        - @user.donations.each do |donation|
+          %tr 
+            %td= link_to donation.project.title, donation.project
+            %td= donation.created_at.strftime('%b %d, %Y')
+            %td= number_to_currency(donation.amount, :unit => '$')
+            %td= number_to_currency(donation.project.raised, :unit => '$')
+
+    - else
+      .well You haven't made any donations yet.

@@ -1,0 +1,8 @@
+= hidden_field_tag :setup, true if @setup
+
+.form-group= f.text_field :name, :autofocus => true, :class => 'form-control first-name', :placeholder => 'Name'
+.form-group= f.email_field :email, :class => 'form-control email', :placeholder => 'Email'
+.form-group= f.password_field :password, :class => 'form-control password', :placeholder => 'Password'
+.form-group= f.password_field :password_confirmation, :class => 'form-control password-conf', :placeholder => 'Retype Password'
+
+%p= f.submit 'Create Account', class: 'btn btn-primary'

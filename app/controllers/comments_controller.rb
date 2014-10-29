@@ -1,19 +1,21 @@
 class CommentsController < ApplicationController
-
+  
+  before_action :authenticate_user!, except: [:index]
   before_action :set_project
   before_action :set_comment, only: [:destroy]
 
-  # Users who have donated can comment and delete their own comment
-  # Admin can delete comments
+  layout 'project'
+  
+  def index; end
   
   def create 
+    # render text: params.inspect
     @comment = @project.comments.new(comment_params)
-    authorize_action_for @comment
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @project, notice: 'Comment was successfully created.' }
+        format.html { redirect_to project_comments_path(@project) }
       else
-        format.html { render action: 'new' }
+        format.html { redirect_to project_comments_path(@project), alert: "Error: #{@comment.errors.full_messages.to_sentence}" }
       end
     end
   end
@@ -22,7 +24,7 @@ class CommentsController < ApplicationController
     authorize_action_for @comment
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to @project }
+      format.html { redirect_to project_comments_path(@project) }
     end
   end
 
@@ -37,7 +39,7 @@ private
   end
 
   def comment_params
-    params.require(:reward).permit(:project_id, :body)
+    params.require(:comment).permit(:user_id, :project_id, :body)
   end
 
 end

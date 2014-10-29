@@ -1,7 +1,10 @@
-class RewardsController < PrivateController
-
+class RewardsController < ApplicationController
+  
+  before_action :authenticate_user!
   before_action :set_project
   before_action :set_reward, except: [:new, :create]
+  
+  layout 'project'
 
   def new
     @reward = @project.rewards.new

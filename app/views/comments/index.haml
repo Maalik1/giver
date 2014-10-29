@@ -1,0 +1,22 @@
+.section
+  - if user_signed_in?
+    - if current_user.donated_to?(@project) or current_user.creds_for?(@project.org)
+      %form{ action: project_comments_path(@project), method: 'post' }
+        .form-group
+          = hidden_field_tag :authenticity_token, form_authenticity_token
+          = hidden_field_tag 'comment[user_id]', current_user.id
+          = text_area_tag 'comment[body]', nil, cols: "30", rows: "5", placeholder: 'Leave a comment', class: 'form-control'
+        .form-group= submit_tag 'Post Comment', class: 'btn btn-default'
+    - else
+      %strong Only supporters are allowed to comment.
+
+- if @project.comments.present?
+  - @project.comments.each do |comment|
+    .section
+      %h4
+        = comment.user.name
+        %small= comment.created_at.strftime("%b %d")
+      %p= simple_format comment.body
+      - if user_signed_in? and current_user.can_delete?(comment)
+        %p= link_to 'Remove This Comment', project_comment_path(@project, comment), method: :delete, data: { confirm: "Are you sure that you would like to delete this comment?" }
+        

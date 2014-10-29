@@ -1,17 +1,18 @@
-class ProjectsController < PrivateController
+class ProjectsController < ApplicationController
 
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:index, :show, :short_link]
   before_action :set_project, except: [:index, :new, :create]
+  before_action :set_index, only: :index
 
-  def index
-    @projects = Project.all
-    authorize_action_for @projects
-  end
+  layout 'project', except: [:index, :new]
+
+  def index; end
 
   def show; end
 
   def new
     @project = Project.new
+    @orgs = (current_user.admin?) ? Org.all : current_user.orgs
     authorize_action_for @project
   end
 
@@ -44,7 +45,7 @@ class ProjectsController < PrivateController
 
   def destroy
     authorize_action_for @project
-    @project.destroy
+    @project.update(active: false)
     respond_to do |format|
       format.html { redirect_to projects_path }
     end
@@ -56,12 +57,21 @@ class ProjectsController < PrivateController
 
 private
 
+  def set_index
+    if params.has_key?(:org)
+      @org = Org.find_by_slug(params[:org]) || not_found
+      @projects = @org.projects
+    else
+      @projects = Project.all
+    end
+  end
+
   def set_project
     @project = Project.find_by_slug(params[:id]).decorate || not_found
   end
 
   def project_params
-    params.require(:project).permit(:org_id, :title, :photo, :video, :blurb, :story, :challenges, :location, :starts, :ends, :goal, :active)
+    params.require(:project).permit(:org_id, :title, :photo, :video, :blurb, :story, :challenges, :location, :starts, :ends, :goal, :active, :bootsy_image_gallery_id)
   end
 
 end

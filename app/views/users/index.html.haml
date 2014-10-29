@@ -1,0 +1,11 @@
+.header
+  %h1 Users
+
+- @users.each_slice(4) do |slice|
+  .row
+    - slice.each do |user|
+      .col-sm-3
+        .module
+          .section.full= image_tag user.photo.url
+          .section
+            %strong.top= link_to user.name, user

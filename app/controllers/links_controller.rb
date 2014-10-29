@@ -1,7 +1,10 @@
-class LinksController < PrivateController
-
+class LinksController < ApplicationController
+  
+  before_action :authenticate_user!
   before_action :set_org
   before_action :set_link, only: [:destroy] 
+
+  layout 'org'
 
   def new
     @link = @org.links.new
@@ -13,7 +16,7 @@ class LinksController < PrivateController
       if @link.save
         format.html { redirect_to @org, notice: 'Link was successfully created.' }
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new', notice: "Error: #{@link.errors.full_messages.to_sentence}" }
       end
     end
   end
@@ -32,11 +35,11 @@ private
   end
 
   def set_org
-    @org = current_user.orgs.find_by_slug(params[:org_id]) || not_found
+    @org = Org.find_by_slug(params[:org_id]) || not_found
   end
 
   def link_params
-    params.require(:link).permit(:org_id, :location, :name, :brand)
+    params.require(:link).permit(:location, :name, :brand)
   end
 
 end

@@ -1,6 +1,0 @@
-<%= hidden_field_tag :setup, true if @setup %>
-<%= f.text_field :name, :autofocus => true, :class => 'form-control first-name', :placeholder => 'Name' %>
-<%= f.email_field :email, :class => 'form-control email', :placeholder => 'Email' %>
-<%= f.password_field :password, :class => 'form-control password', :placeholder => 'Password' %>
-<%= f.password_field :password_confirmation, :class => 'form-control password-conf', :placeholder => 'Retype Password' %>
-<%= f.submit 'Create Account', class: 'btn btn-lg btn-primary' %>

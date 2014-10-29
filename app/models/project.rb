@@ -2,6 +2,7 @@ class Project < ActiveRecord::Base
   extend FriendlyId
 
   include Authority::Abilities
+  include Bootsy::Container
 
   default_scope { where(active: true) }
 
@@ -18,9 +19,8 @@ class Project < ActiveRecord::Base
   validates :story, presence: true, length: { minimum: 50 }
   validates :starts,
             date: { 
-                    after_or_equal_to: Proc.new { Date.today },
                     before: Proc.new { Date.today + 1.year },
-                    message: 'date must be after today and within a year' 
+                    message: 'date must be within a year' 
                   }
   validates :ends, date: { after: :starts, message: 'date must be after the start date' }
   validates :goal, price: true
@@ -30,5 +30,17 @@ class Project < ActiveRecord::Base
   mount_uploader :photo, PhotoUploader
   friendly_id    :title, use: :history
   geocoded_by    :location
+
+  def running?
+  	Date.today >= self.starts and Date.today <= self.ends
+  end
+
+  def days_to_go
+  	(self.ends - Date.today).to_i
+  end
+
+  def raised
+    self.donations.sum(:amount)
+  end
 
 end

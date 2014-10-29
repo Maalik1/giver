@@ -7,8 +7,10 @@ gem 'jbuilder', '~> 2.0'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'therubyracer'
+gem 'coffee-rails'
 gem 'less-rails'
 gem 'haml'
+gem 'html2haml'
 gem 'draper'
 gem 'devise'
 gem 'devise_invitable'
@@ -25,6 +27,7 @@ gem 'fog', '~> 1.3.1'
 gem 'stripe'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'settingslogic'
 
 group :development do
   gem 'letter_opener'

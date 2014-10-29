@@ -1,0 +1,21 @@
+.section
+  %h3.top Projects
+
+  - if @org.projects.present?
+    %table.table.table-bordered
+      %thead
+        %tr 
+          %th Project
+          %th Duration
+          %th Raised
+          %th Gaol
+      %tbody
+      - @org.projects.each do |project|
+        %tr 
+          %td= link_to project.title, project
+          %td= "#{project.starts.strftime('%b %d, %Y')} - #{project.ends.strftime('%b %d, %Y')}"
+          %td= number_to_currency(project.raised, :unit => '$')
+          %td= number_to_currency(project.goal, :unit => '$')
+
+  - else
+    .well No projects exist yet

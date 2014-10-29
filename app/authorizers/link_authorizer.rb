@@ -1,11 +1,11 @@
 class LinkAuthorizer < ApplicationAuthorizer
 
   def creatable_by?(user)
-    user.admin_for? resource.org
+    user.creds_for? resource.org, :admin
   end
 
   def deletable_by?(user)
-    user.admin_for? resource.org
+    user.creds_for? resource.org, :admin
   end
 
 end

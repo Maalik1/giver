@@ -1,7 +1,0 @@
-<h3>Add Org Link</h3>
-<%= form_for [@org, @link], html: { class: 'form' } do |f| %>
-  <%= f.text_field :location %>
-  <%= f.text_field :name %>
-  <%= f.select     :brand, Link::TYPES.map { |b| b } %>
-  <%= f.submit 'Submit' %>
-<% end %>

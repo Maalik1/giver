@@ -8,7 +8,7 @@ class ApplicationAuthorizer < Authority::Authorizer
   # @param [Object] user - whatever represents the current user in your app
   # @return [Boolean]
   def self.default(adjective, user)
-    user.admin?
+    user.site_admin?
   end
 
 end

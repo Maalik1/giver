@@ -7,7 +7,6 @@ class Donation < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :project_id, presence: true
-  validates :reward_id, presence: true
   validates :amount, price: true, numericality: { greater_than_or_equal_to: 1 }
   
   before_create :gen_uuid

@@ -1,7 +1,12 @@
-class UpdatesController < PrivateController
-
+class UpdatesController < ApplicationController
+  
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_project
-  before_action :set_update, except: [:new, :create]
+  before_action :set_update, except: [:index, :new, :create]
+
+  layout 'project'
+
+  def index; end
 
   def new
     @update = @project.updates.new

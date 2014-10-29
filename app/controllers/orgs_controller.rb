@@ -1,8 +1,9 @@
-class OrgsController < PrivateController
+class OrgsController < ApplicationController
 
-  authorize_actions_for Org
-
+  before_action :authenticate_user!, except: [:index, :show, :projects, :location]
   before_action :set_org, except: [:index, :new, :create]
+
+  layout 'org', except: [:index, :new]
 
   def index
     @orgs = Org.all
@@ -12,10 +13,12 @@ class OrgsController < PrivateController
 
   def new
     @org = Org.new
+    authorize_action_for @org
   end
 
   def create 
-    @org = Org.new(project_params)
+    @org = Org.new(org_params)
+    authorize_action_for @org
     respond_to do |format|
       if @org.save
         format.html { redirect_to @org, notice: 'Org was successfully created.' }
@@ -52,14 +55,16 @@ class OrgsController < PrivateController
 
   def projects; end
 
+  def location; end
+
 private
 	
   def set_org
-    @org = current_user.orgs.find_by_slug(params[:id]) || not_found
+    @org = Org.find_by_slug(params[:id]) || not_found
   end
 
   def org_params
-    params.require(:org).permit(:name, :display_name, :ein, :photo, :description, :mission, :location, :tax_exempt)
+    params.require(:org).permit(:name, :display_name, :ein, :photo, :description, :mission, :location, :tax_exempt, :bootsy_image_gallery_id)
   end
 
 end

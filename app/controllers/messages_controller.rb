@@ -1,10 +1,8 @@
-class MessagesController < PrivateController
-
+class MessagesController < ApplicationController
+  
+  before_action :authenticate_user!
   before_action :set_project
   before_action :set_message, only: [:show, :create, :destroy]
-
-  # Users can create messages
-  # Admin can index, show, delete
   
   def index; end
 

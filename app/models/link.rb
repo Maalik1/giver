@@ -5,7 +5,6 @@ class Link < ActiveRecord::Base
 
   belongs_to :linkable, polymorphic: true
 
-  validates :org_id, presence: true
   validates :location, presence: true
 
 end

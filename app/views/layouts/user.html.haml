@@ -1,0 +1,33 @@
+-# Render Page Header
+- content_for :header do
+  %h1= @user.name
+
+
+-# Render Page Primary Content
+- content_for :content do
+  .col-sm-4.project-sidebar
+    .module
+      .section.full
+        = image_tag @user.photo.url
+    
+    .module
+      .section
+        .list-group
+          = link_to current_user.name, user_path(current_user), class: 'list-group-item'
+          - if user_signed_in?
+            = link_to 'Edit Profile', edit_user_path(current_user), class: 'list-group-item'
+            = link_to 'Your Donations', donations_user_path(current_user), class: 'list-group-item'
+            
+        = "Joined #{current_user.created_at.strftime("%b %d, %Y")}"
+
+
+
+-# Render Page Secondary Content
+- content_for :sidebar do
+  .col-sm-8
+    = content_for?(:projects_content) ? yield(:projects_content) : yield
+
+
+
+-# Pass content to layout
+= render template: "layouts/application"

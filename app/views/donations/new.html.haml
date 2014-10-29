@@ -1,0 +1,39 @@
+= form_tag payment_project_donations_path(@project), method: 'get' do
+  .section
+    %h3.top Enter your donation amount
+    .row
+      .col-sm-6
+        .form-group.has-success
+          .input-group.input-group-lg
+            .input-group-addon $
+            = number_field_tag :amount, nil, min: 1.00, step: 0.01, class: 'form-control'
+      .col-sm-6
+        Any amount you wish
+        %br
+        Anything over $1
+
+  .section
+    .row
+      .col-sm-2
+        = radio_button_tag 'reward', '0'
+        = label_tag "reward_0", 'No Reward'
+  
+  - @project.rewards.each do |reward|
+    .section
+      .row
+        .col-sm-2
+          = radio_button_tag 'reward', reward.uuid, @reward == reward.uuid
+          = label_tag "reward_#{reward.uuid}", number_to_currency(reward.amount, :unit => "$")
+        
+        .col-sm-10
+          - if reward.limit
+            %strong.bg-warning= "Limited: #{reward.num_available} left of #{reward.limit_number}"
+
+          %p= reward.description
+
+          - if reward.shipping
+            %strong Estimated delivery:
+            = reward.delivery_date.strftime("%b %d, %Y")
+  
+  .section
+    = submit_tag 'Continue to next step', class: 'btn btn-success'

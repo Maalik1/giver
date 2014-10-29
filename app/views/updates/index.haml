@@ -1,0 +1,13 @@
+- if user_signed_in? and current_user.can_create?(@project)
+  .section
+    = link_to 'Add a new project update', new_project_update_path(@project)
+
+- if @project.updates.present?
+  - @project.updates.each do |update|
+    .section
+      %h3= update.title
+      %p= simple_format update.content
+      - if user_signed_in? and current_user.can_delete?(update)
+        %p= link_to 'Remove This Update', project_update_path(@project, update), method: :delete, data: { confirm: "Are you sure that you would like to delete this update?" }
+
+

@@ -5,7 +5,7 @@ class CreateRewards < ActiveRecord::Migration
       t.string  :uuid
       t.decimal :amount
       t.text    :description
-      t.boolean :shipping,       default: true
+      t.boolean :shipping,       default: false
       t.date    :delivery_date
       t.boolean :limit,          default: false
       t.integer :limit_number

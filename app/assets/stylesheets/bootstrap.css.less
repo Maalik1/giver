@@ -1,0 +1,59 @@
+// Custom Bootstrap Overrides
+h1, h2, h3, h4, h5 {
+	font-weight: bold;
+}
+
+h1 { font-size: 46px; }
+h2 { font-size: 36px; }
+
+.btn {
+  border-radius: 2px;
+}
+
+.btn-lg, .btn-group-lg>.btn {
+  border-radius: 3px;
+}
+
+.dropdown-menu {
+	border-radius: 1px !important;
+	border-color: #ddd;
+	-webkit-box-shadow: 0 3px 8px rgba(0,0,0,.15);
+	box-shadow: 0 3px 8px rgba(0,0,0,.15);
+}
+
+.nav {
+	&.nav-tabs {
+		border: none;
+		li {
+			margin: 0;
+			a {
+				border: 0 !important;
+			}
+		}
+	}
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+
+  input[type=file] {
+	  position: absolute;
+	  top: 0;
+	  right: 0;
+	  min-width: 100%;
+	  min-height: 100%;
+	  font-size: 100px;
+	  text-align: right;
+	  filter: alpha(opacity=0);
+	  opacity: 0;
+	  background: red;
+	  cursor: inherit;
+	  display: block;
+	}
+
+	input[readonly] {
+	  background-color: white !important;
+	  cursor: text !important;
+	}
+}

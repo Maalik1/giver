@@ -1,0 +1,13 @@
+.section
+  %h3.top Projects
+
+  - @user.projects.each_slice(3) do |slice|
+    .row
+      - slice.each do |project|
+        .col-sm-4
+          .module
+            .section.full
+              = image_tag project.photo.url
+            .section
+              %h4.top= link_to project.title, project
+              %p= project.blurb[0..85] + '...'

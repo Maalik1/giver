@@ -1,0 +1,58 @@
+= form_for @org, html: { class: 'form form-horizontal' } do |f|
+  - if @org.errors.any?
+    .alert.alert-danger
+      %strong= "#{pluralize(@org.errors.count, "error")} prohibited this org from being saved:"
+    
+    %ul 
+      - @org.errors.full_messages.each do |msg|
+        %li= msg
+
+  .form-group
+    %label.col-sm-2.control-label Image
+    .col-sm-10
+      .input-group
+        %span.input-group-btn
+          %button.btn.btn-default{ onclick: "document.getElementById('photo').click(); return false;" } Choose photo
+        = text_field_tag :path, nil, class: 'path form-control'
+    
+      = f.file_field :photo, id: 'photo', class: 'file-field'
+
+  .form-group
+    %label.col-sm-2.control-label Name
+    .col-sm-10
+      = f.text_field :name, class: 'form-control', placeholder: 'Official organization name'
+
+  .form-group
+    %label.col-sm-2.control-label Display Name
+    .col-sm-10
+      = f.text_field :display_name, class: 'form-control', placeholder: 'Display name'
+
+  .form-group
+    %label.col-sm-2.control-label Location
+    .col-sm-10
+      = f.text_field :location, class: 'form-control', placeholder: 'Organization\'s address'
+
+  .form-group
+    %label.col-sm-2.control-label Employee ID
+    .col-sm-10
+      = f.text_field :ein, class: 'form-control', placeholder: 'EIN'
+
+  .form-group
+    %label.col-sm-2.control-label Description
+    .col-sm-10
+      = f.text_area :description, cols: '30', rows: '15', class: 'form-control', placeholder: 'Description of this organization'
+
+  .form-group
+    %label.col-sm-2.control-label Mission
+    .col-sm-10
+      = f.text_area :mission, cols: '30', rows: '15', class: 'form-control', placeholder: 'Mission of this organization'
+
+  .form-group
+    .col-sm-10.col-sm-offset-2.text-success
+      %label.checkbox
+      = f.check_box  :tax_exempt
+      Donations are tax exempt
+
+  .form-group
+    .col-sm-10.col-sm-offset-2
+      = f.submit 'Submit', class: 'btn btn-primary'

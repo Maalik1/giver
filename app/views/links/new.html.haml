@@ -1,0 +1,33 @@
+.row.project-body
+  .col-sm-8.project-main
+    .module
+      = form_for [@org, @link], html: { class: 'form form-horizontal' } do |f|
+        .section
+          %h3 Add Link
+
+          - if @link.errors.any?
+            .alert.alert-danger
+              %strong= "#{pluralize(@link.errors.count, "error")} prohibited this link from being saved:"
+            
+              %ul 
+                - @link.errors.full_messages.each do |msg|
+                  %li= msg
+
+          .form-group
+            %label.col-sm-2.control-label Location
+            .col-sm-10
+              = f.text_field :location, class: 'form-control', placeholder: 'http://www.example.com'
+          
+          .form-group
+            %label.col-sm-2.control-label Title
+            .col-sm-10
+              = f.text_field :name, class: 'form-control', placeholder: 'Our Website'
+
+          .form-group
+            %label.col-sm-2.control-label Type
+            .col-sm-3
+              = f.select :brand, Link::TYPES.map { |b| b }, {}, { class: 'form-control' }
+
+          .form-group
+            .col-sm-10.col-sm-offset-2
+              = f.submit 'Create Link', class: 'btn btn-primary'

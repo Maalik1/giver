@@ -5,15 +5,15 @@ class OrgAuthorizer < ApplicationAuthorizer
   end
 
   def self.creatable_by?(user)
-    user.admin?
+    user.site_admin?
   end
 
   def updatable_by?(user)
-    user.admin_for? resource, :admin
+    user.creds_for? resource, :admin
   end
 
   def deletable_by?(user)
-    user.admin_for? resource, :admin
+    user.site_admin?
   end
 
 end

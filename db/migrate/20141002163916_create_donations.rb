@@ -5,7 +5,8 @@ class CreateDonations < ActiveRecord::Migration
       t.integer :project_id
       t.integer :reward_id
       t.string  :uuid
-      t.decimal :amount
+      t.decimal :amount 
+      t.boolean :anonymous, default: false
 
       t.timestamps
     end

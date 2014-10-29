@@ -1,0 +1,53 @@
+-# Render Page Header
+- content_for :header do
+  %h1= @org.name
+
+
+
+-# Render Page Sub Navigation
+- content_for :sub_nav do
+  .col-sm-12
+    %ul.nav.nav-tabs.pull-left
+      %li{ class: (params[:action] == 'show') ? 'active': '' }= link_to 'Home', org_path(@org)
+      %li{ class: (params[:action] == 'projects') ? 'active': '' }
+        = link_to projects_org_path(@org) do 
+          Projects
+
+      %li{ class: (params[:action] == 'location') ? 'active': '' }
+        = link_to location_org_path(@org) do 
+          Location
+
+
+
+-# Render Page Primary Content
+- content_for :content do
+  .col-sm-8
+    .module
+      = content_for?(:orgs_content) ? yield(:orgs_content) : yield
+
+
+
+-# Render Page Secondary Content
+- content_for :sidebar do
+  .col-sm-4
+    - if user_signed_in? and current_user.creds_for?(@org, :admin)
+      .module
+        .section
+          %h3.top Admin Links
+          .list-group
+            = link_to 'Edit Organization Details', edit_org_path(@org), class: 'list-group-item'
+            = link_to 'Add Organization Link +', new_org_link_path(@org), class: 'list-group-item'
+            = link_to 'Invite User', new_user_invitation_path(org: @org.slug), class: 'list-group-item'
+            = link_to 'View Admin', admin_org_path(@org), class: 'list-group-item'
+
+    .module
+      .section
+        %h3.top Links
+        .list-group
+          - @org.links.each do |link|
+            = link_to link.name, link.location, target: '_blank', class: 'list-group-item'
+
+
+
+-# Pass content to layout
+= render template: "layouts/application"

@@ -6,6 +6,11 @@ Rails.application.routes.draw do
 
   resources :orgs do
     resources :links
+    member do
+      get :projects
+      get :location
+      get :admin
+    end
   end
 
   resources :projects do
@@ -24,10 +29,14 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get :donations
+      get  :donations
+      get  :creditcard
+      post :update_creditcard
     end
   end
 
-  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
+  require 'sidekiq/web'
+  mount Sidekiq::Web,   at: '/sidekiq'
+  mount Bootsy::Engine, at: '/bootsy', as: 'bootsy'
 
 end

@@ -1,0 +1,12 @@
+.row
+  .col-sm-4.col-sm-offset-4
+    .module
+      .section
+        %h3.top Log in 
+        = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+          .form-group= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Email'
+          .form-group= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password'
+          
+          %p= f.submit "Log in", class: 'btn btn-primary'
+        
+        %p= render "users/shared/links"

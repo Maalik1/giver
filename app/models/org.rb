@@ -2,6 +2,7 @@ class Org < ActiveRecord::Base
   extend FriendlyId
 
   include Authority::Abilities
+  include Bootsy::Container
 
   has_many :creds
   has_many :users, through: :creds

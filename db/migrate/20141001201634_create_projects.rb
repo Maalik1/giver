@@ -15,6 +15,7 @@ class CreateProjects < ActiveRecord::Migration
       t.date    :starts
       t.date    :ends
       t.decimal :goal
+      t.integer :updates_count,   default: 0, null: false
       t.integer :donations_count, default: 0, null: false
       t.integer :comments_count,  default: 0, null: false
       t.boolean :active,          default: true

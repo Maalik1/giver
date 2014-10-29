@@ -1,0 +1,11 @@
+- if @project.donations.present?
+  - @project.donations.each do |donation|
+    .section
+      .col-sm-8
+        %strong= (donation.anonymous) ? 'Anonymous' : link_to(donation.user.name, donation.user)
+      .col-sm-4.text-right
+        = number_to_currency(donation.amount, :unit => '$')
+      
+- else
+  .section
+    %strong There are currently no donations for this project

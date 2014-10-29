@@ -27,11 +27,7 @@ protected
 
   # Devise routing mods
   def after_sign_up_path_for(resource)
-    if resource.admin?
-      edit_org_path resource.orgs.first
-    else
-      root_path
-    end
+    root_path
   end
 
   def after_sign_in_path_for(resource)

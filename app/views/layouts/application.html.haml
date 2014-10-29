@@ -1,0 +1,81 @@
+!!!
+%html{:lang => "en"}
+
+  %head
+    %meta{:charset => "utf-8"}/
+    %title Giver
+    %meta{content: '', name: 'description'}
+    %meta{content: '', name: 'author'}
+
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+  %body
+    .navbar.navbar-default.navbar-fixed-top{ role: 'navigation' }
+      .container
+        .navbar-header
+          %button{class: 'navbar-toggle collapsed', data: { toggle: 'collapse', target: '.navbar-collapse' } }
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to Settings.app[:name], root_path, class: 'navbar-brand'
+
+        .navbar-collapse.collapse
+          %ul.nav.navbar-nav
+            %li= link_to 'Browse', projects_path
+          
+          %ul.nav.navbar-nav.navbar-right
+            - if user_signed_in?
+              - if current_user.admin?
+                %li.dropdown
+                  %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
+                    Admin
+                    %span.caret
+
+                  %ul.dropdown-menu
+                    %li= link_to '+ New Project', new_project_path
+                    %li= link_to '+ New Organization', new_org_path
+                    %li.divider
+                    %li.dropdown-header Organizations
+                    - if current_user.site_admin?
+                      - Org.find_each do |org|
+                        %li= link_to org.name, org_path(org)
+                    -else
+                      - current_user.orgs.each do |org|
+                        %li= link_to org.name, org_path(org)
+              
+              %li.dropdown
+                %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
+                  = current_user.name
+                  %span.caret
+                
+                %ul.dropdown-menu
+                  %li= link_to 'Profile', user_path(current_user)
+                  %li= link_to 'Donations', donations_user_path(current_user)
+                  %li.divider
+                  %li= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'logout'
+          
+            - else
+              %li= link_to 'Login', user_session_path
+
+            
+
+    .container
+      - if flash[:notice]
+        .alert.alert-info= flash[:notice]
+      - if flash[:alert]
+        .alert.alert-danger= flash[:alert]
+      
+      - if content_for?(:header)
+        .row.header= yield :header
+
+      - if content_for?(:header)
+        .row.sub-nav= yield :sub_nav
+
+      .row.content
+        .primary
+          = content_for?(:content) ? yield(:content) : yield
+        
+        - if content_for?(:sidebar)
+          .secondary= yield :sidebar

@@ -26,7 +26,7 @@ private
 	
   def check_user_privileges
     @org = Org.find_by_slug(params[:org]) || not_found
-    unless current_user.admin_for? @org, :admin
+    unless current_user.creds_for? @org, :admin
       redirect_to session[:previous_url] || root_path, :alert => 'You are not authorized to complete that action.'
     end
   end

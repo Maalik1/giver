@@ -1,0 +1,92 @@
+= form_for @project, html: { class: 'form form-horizontal' } do |f|
+  .section
+    %h3 Project details
+
+    - if @project.errors.any?
+      .alert.alert-danger
+        %strong= "#{pluralize(@project.errors.count, "error")} prohibited this org from being saved:"
+      
+      %ul 
+        - @project.errors.full_messages.each do |msg|
+          %li= msg
+
+    .form-group
+      %label.col-sm-2.control-label Title
+      .col-sm-10
+        = f.text_field :title, class: 'form-control', placeholder: 'Project title'
+
+    .form-group
+      %label.col-sm-2.control-label Organization
+      .col-sm-10
+        = f.select :org_id, @orgs.collect { |o| [ o.name, o.id ] }, {}, { class: 'form-control' }
+
+    .form-group
+      %label.col-sm-2.control-label Fund Goal
+      .col-sm-3
+        .input-group
+          .input-group-addon $
+          = f.number_field :goal, step: 'any', class: 'form-control', placeholder: 'Goal'
+
+    .form-group
+      .col-sm-10.col-sm-offset-2.text-success
+        %label.checkbox
+        = f.check_box :active
+        Donations are tax exempt
+
+  .section
+    %h3.top When &amp; Where
+    .form-group
+      %label.col-sm-2.control-label Start Date
+      .col-sm-10
+        = f.date_select :starts, { start_year: Time.now.year, order: [:month, :day, :year] }, { class: 'form-control select-inline' }
+
+    .form-group
+      %label.col-sm-2.control-label End Date
+      .col-sm-10
+        = f.date_select :ends, { start_year: Time.now.year, order: [:month, :day, :year] }, { class: 'form-control select-inline' }
+    
+    .form-group
+      %label.col-sm-2.control-label Location
+      .col-sm-10
+        = f.text_field :location, class: 'form-control', placeholder: 'location' 
+
+  .section
+    %h3.top Media
+    .form-group
+      %label.col-sm-2.control-label Feature photo
+      .col-sm-10
+        .input-group
+          %span.input-group-btn
+            %button.btn.btn-default{ onclick: "document.getElementById('photo').click(); return false;" } Choose photo
+          = text_field_tag :path, nil, class: 'path form-control'
+      
+        = f.file_field :photo, id: 'photo', class: 'file-field'
+
+    .form-group
+      %label.col-sm-2.control-label Feature Video
+      .col-sm-10
+        .input-group
+          %span.input-group-addon Video link
+          = f.text_field :video, class: 'form-control', placeholder: 'http://youtu.be/ABCDEFG'
+
+  .section
+    %h3.top Additional details
+    .form-group
+      %label.col-sm-2.control-label Blurb
+      .col-sm-10
+        = f.text_area :blurb, class: 'form-control', maxlength: '140', placeholder: 'Blurb about your project'
+        .help-block Describe your project in one tweet
+    .form-group
+      %label.col-sm-2.control-label Challenges
+      .col-sm-10
+        = f.text_area  :challenges, cols: '30', rows: '15', class: 'form-control', placeholder: 'Challenges that face your project'
+
+  .section
+    %h3.top Tell your story
+     
+    .form-group
+      .col-sm-12
+        = f.bootsy_area  :story, cols: '30', rows: '20', class: 'form-control', placeholder: 'Tell us all about your project'
+
+    %p
+      = f.submit 'Create Project', class: 'btn btn-primary'

@@ -1,11 +1,7 @@
 class DonationAuthorizer < ApplicationAuthorizer
 
-  def readable_by?(user)
-    user.admin_for? resource.project.org
-  end
-
-  def creatable_by?(user)
-    user
+	def self.default(adjective, user)
+    true
   end
 
 end

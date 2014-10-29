@@ -1,0 +1,22 @@
+= form_for [@project, @update], html: { class: 'form form-horizontal' } do |f|
+  - if @update.errors.any?
+    .alert.alert-danger
+      %strong= "#{pluralize(@update.errors.count, "error")} prohibited this update from being saved:"
+    
+    %ul 
+      - @update.errors.full_messages.each do |msg|
+        %li= msg
+
+  .form-group
+    %label.col-sm-2.control-label Title
+    .col-sm-10
+      = f.text_field :title, class: 'form-control', placeholder: 'This is your update!'
+
+  .form-group
+    %label.col-sm-2.control-label Update
+    .col-sm-10
+      = f.text_area :content, cols: '30', rows: '10', class: 'form-control', placeholder: 'Let your donors know what is currently going on with your project.'
+  
+  .form-group
+    .col-sm-10.col-sm-offset-2
+      = f.submit 'Save Update', class: 'btn btn-primary'

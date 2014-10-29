@@ -1,0 +1,95 @@
+-# Render Page Header
+- content_for :header do
+  %h1= @project.title
+  .project-owner
+    by
+    = link_to @project.org.name, org_path(@project.org)
+
+
+
+-# Render Page Sub Navigation
+- content_for :sub_nav do
+  .col-sm-12
+    %ul.nav.nav-tabs.pull-left
+      %li{ class: (params[:controller] == 'projects') ? 'active': '' }= link_to 'Story', project_path(@project)
+      %li{ class: (params[:controller] == 'updates') ? 'active': '' }
+        = link_to project_updates_path(@project) do 
+          Updates
+          %span.badge= @project.updates_count
+
+      %li{ class: (params[:controller] == 'donations') ? 'active': '' }
+        = link_to project_donations_path(@project) do 
+          Donations
+          %span.badge= @project.donations_count
+
+      %li{ class: (params[:controller] == 'comments') ? 'active': '' }
+        = link_to project_comments_path(@project) do 
+          Comments
+          %span.badge= @project.comments_count
+
+
+
+-# Render Page Primary Content
+- content_for :content do
+  .col-sm-8
+    .module
+      = content_for?(:projects_content) ? yield(:projects_content) : yield
+
+
+
+-# Render Page Secondary Content
+- content_for :sidebar do
+  .col-sm-4
+    - if user_signed_in? and current_user.can_update?(@project)
+      .module
+        .section
+          %h3.top Admin
+          .list-group
+            = link_to 'Edit This Project', edit_project_path(@project), class: 'list-group-item'
+            = link_to 'Remove This Project', @project, method: :delete, data: { confirm: "Are you sure that you would like to delete the project \"#{@project.title}\"?" }, class: 'list-group-item'
+
+    .module
+      .section
+        %h3.raised= number_to_currency(@project.raised, :unit => '$')
+        .goal= "Raised of #{number_to_currency(@project.goal, :unit => '$')}"
+        .to-go= "#{@project.days_to_go} days to go"
+        %p
+          = link_to 'Donate Now', new_project_donation_path(@project), class: 'btn btn-success btn-lg btn-block'
+
+        - if @project.org.tax_exempt
+          %span.text-success *Donations to this project are tax deductible.
+    
+    - if @project.latitude
+      .module
+        .section
+          %div{ id: 'map' }
+          :javascript
+            var locations = [
+              ['#{@project.title}', '#{@project.latitude}', '#{@project.longitude}', 1],
+            ];
+            function map() { buildMap(locations); }
+          = javascript_include_tag 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=map'
+
+    .module
+      - if user_signed_in? and current_user.creds_for?(@project.org, :admin)
+        .section
+          %strong= link_to 'Add new reward', new_project_reward_path(@project)
+
+      - @project.rewards.each do |reward|
+        -unless reward.new_record?
+          = link_to payment_project_donations_path(@project, reward: reward.uuid), { class: 'section' } do
+            %h4.top= "Donate #{number_to_currency(reward.amount, :unit => '$')} or more"
+            
+            - if reward.limit
+              %strong.bg-warning= "Limited: #{reward.num_available} left of #{reward.limit_number}"
+
+            %p= reward.description
+
+            - if reward.shipping
+              %strong Estimated delivery:
+              = reward.delivery_date.strftime("%b %d, %Y")
+
+
+
+-# Pass content to layout
+= render template: "layouts/application"
