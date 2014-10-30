@@ -1,9 +1,5 @@
 .section.full
-  - if @project.video.present?
-    .embed-responsive.embed-responsive-16by9
-      %iframe.embed-responsive-item{ src: @project.video, allowfullscreen: '' }
-  - else
-    = image_tag @project.photo.large.url
+  = @project.feature
 .section.story
   = simple_format @project.story
 .section

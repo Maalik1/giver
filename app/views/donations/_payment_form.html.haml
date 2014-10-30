@@ -1,0 +1,47 @@
+= form_for [@project, @donation], html: { id: 'credit-card-form', class: 'form-horizontal' } do
+  %p.alerts
+  = hidden_field_tag :reward, (@reward) ? @reward.uuid : 0
+  = hidden_field_tag :amount, @amount
+
+  - unless user_signed_in?
+    .form-group
+      %label.col-sm-2.control-label Name
+      .col-sm-6
+        = text_field_tag :name, nil, placeholder: "Full Name", class: 'form-control'
+
+    .form-group
+      %label.col-sm-2.control-label Email
+      .col-sm-6
+        = text_field_tag :email, nil, placeholder: "your.email@example.com", class: 'form-control'
+
+  .form-group
+    %label.col-sm-2.control-label Card Number
+    .col-sm-6
+      = text_field_tag :card_number, nil, name: nil, placeholder: "Card Number", size: 20, data: { stripe: 'number' }, class: 'form-control'
+  
+  .form-group
+    %label.col-sm-2.control-label CVC
+    .col-sm-3
+      = text_field_tag :cvc, nil, name: nil, placeholder: "CVC", size: 20, data: { stripe: 'cvc' }, class: 'form-control'
+  
+  .form-group
+    %label.col-sm-2.control-label Exp Date
+    .col-sm-10
+      = select_month(Date.today, { prompt: 'Choose month' }, { data: { stripe: 'exp-month' }, class: 'form-control select-inline' })
+      = select_year(Date.today, { start_year: Date.today.year, prompt: 'Choose year' }, { data: { stripe: 'exp-year' }, class: 'form-control select-inline' })
+  
+  .form-group
+    .col-sm-10.col-sm-offset-2.text-warning
+      %label.checkbox
+        = check_box_tag :anonymous
+        Donate anonymously
+
+  .form-group
+    %label.col-sm-2.control-label
+    .col-sm-10
+      = submit_tag 'Donate Now', class: 'submit btn btn-success'
+
+
+- content_for :js do
+  = javascript_include_tag 'https://js.stripe.com/v2/'
+  = javascript_include_tag 'stripe'

@@ -1,0 +1,16 @@
+= form_for [@project, @donation], html: { id: 'credit-card-form', class: 'form-horizontal' } do
+  %p.alerts
+  = hidden_field_tag :reward, (@reward) ? @reward.uuid : 0
+  = hidden_field_tag :amount, @amount
+  = hidden_field_tag :token, 0
+  
+  .form-group
+    .col-sm-6.text-warning
+      = check_box_tag :anonymous
+      Donate anonymously
+
+  .form-group
+    .col-sm-3
+      = submit_tag 'Place Donation Now', class: 'submit btn btn-success btn-block'
+
+%p.text-muted= link_to 'Click here to update your credit card', creditcard_user_path(current_user)

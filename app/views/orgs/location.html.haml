@@ -2,9 +2,11 @@
   %h3.top Location
   - if @org.latitude
     %div{ id: 'map' }
-    :javascript
-      var locations = [
-        ['#{@org.name}', '#{@org.latitude}', '#{@org.longitude}', 1],
-      ];
-      function map() { buildMap(locations); }
-    = javascript_include_tag 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=map'
+    - content_for :js do
+      = javascript_include_tag 'maps'
+      :javascript
+        var locations = [
+          ['#{@org.name}', '#{@org.latitude}', '#{@org.longitude}', 1],
+        ];
+        function map() { buildMap(locations); }
+      = javascript_include_tag 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=map'

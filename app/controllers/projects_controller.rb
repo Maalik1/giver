@@ -30,6 +30,7 @@ class ProjectsController < ApplicationController
 
   def edit
     authorize_action_for @project
+    @orgs = (current_user.admin?) ? Org.all : current_user.orgs
   end
 
   def update

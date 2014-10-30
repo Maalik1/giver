@@ -8,7 +8,6 @@
     %meta{content: '', name: 'author'}
 
     = stylesheet_link_tag    'application', media: 'all'
-    = javascript_include_tag 'application'
     = csrf_meta_tags
 
   %body
@@ -74,8 +73,11 @@
         .row.sub-nav= yield :sub_nav
 
       .row.content
-        .primary
-          = content_for?(:content) ? yield(:content) : yield
+        .primary= content_for?(:content) ? yield(:content) : yield
         
         - if content_for?(:sidebar)
           .secondary= yield :sidebar
+
+
+  = javascript_include_tag 'application'
+  = yield :js

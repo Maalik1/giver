@@ -14,4 +14,4 @@
 //= require jquery_ujs
 //= require bootsy
 //= require twbs/dist/js/bootstrap.min
-//= require_tree .
+//= require forms
