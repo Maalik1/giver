@@ -17,8 +17,6 @@ config/locale
 config/deploy/production.rb
 config/newrelic.yml
 
-public/system/production
-public/system/development
-public/system/test
+public/uploads
 public/stylesheets/all.css
 public/javascripts/all.js

@@ -1,0 +1,21 @@
+default: &default
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: db/development.sqlite3
+
+test:
+  <<: *default
+  database: db/test.sqlite3
+
+production:
+  adapter: mysql2
+  database: giver
+  host: "<%= ENV['APP_DB_HOST'] %>"
+  port: <%= ENV['APP_DB_PORT'] || "3000" %>
+  username: <%= ENV['APP_DB_USER'] %>
+  password: <%= ENV['APP_DB_PASSWORD'] %>
+  encoding: utf8

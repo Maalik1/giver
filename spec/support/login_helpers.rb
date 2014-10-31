@@ -2,8 +2,10 @@ module LoginHelpers
 
   def login_as(role)
     if role == 'admin'
-      admin = FactoryGirl.create(:admin)
-      @user = admin.user
+      cred = FactoryGirl.create(:cred)
+      @user = cred.user
+    elsif role == 'site_admin'
+      @user = FactoryGirl.create(:site_admin)
     elsif role == 'user'
       @user = FactoryGirl.create(:user)
     end

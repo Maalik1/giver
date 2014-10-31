@@ -1,3 +1,3 @@
 # Giver.io Fundraising Platform
 
-This is an dev version of our fundraising platform.
+Giver is an open source fundraising platform that is currently under development and is not suitable for production at this time.
