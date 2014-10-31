@@ -2,32 +2,32 @@ class DonationsWorker
   include Sidekiq::Worker
 
   def perform(args={})
-  	if ['user_id', 'project_id', 'card_token', 'amount'].all? { |a| args.key? a }
-	  	reward_id = args['reward_id'] || nil
-	  	anonymous = args['anonymous'] || false
-			
-	    user  = User.find(args['user_id'])
-	    cents = args['amount'].to_i*100
+    if ['user_id', 'project_id', 'card_token', 'amount'].all? { |a| args.key? a }
+      reward_id = args['reward_id'] || nil
+      anonymous = args['anonymous'] || false
 
-	    donation = Donation.create(
-	      user_id:    args['user_id'], 
-	      project_id: args['project_id'], 
-	      amount:     args['amount'],
-	      reward_id:  reward_id,
-	      anonymous:  anonymous
-	    )
+      user  = User.find(args['user_id'])
+      cents = args['amount'].to_i*100
 
-	    unless user.stripe_id.present?
-	      customer = Stripe::Customer.create(email: user.email, card: args['card_token'], description: user.name)
-	      user.update(stripe_id: customer.id)
-	    end
+      donation = Donation.create(
+        user_id:    args['user_id'], 
+        project_id: args['project_id'], 
+        amount:     args['amount'],
+        reward_id:  reward_id,
+        anonymous:  anonymous
+      )
 
-	    Stripe::Charge.create(
-	      customer: user.stripe_id,
-	      amount: cents.floor,
-	      currency: "usd"
-	    )
+      unless user.stripe_id.present?
+        customer = Stripe::Customer.create(email: user.email, card: args['card_token'], description: user.name)
+        user.update(stripe_id: customer.id)
+      end
 
-	  end
+      Stripe::Charge.create(
+        customer: user.stripe_id,
+        amount: cents.floor,
+        currency: "usd"
+      )
+
+    end
   end
 end

@@ -4,15 +4,15 @@ class ProjectDecorator < Draper::Decorator
   delegate_all
 
   def feature
-  	if object.video.present?
-  		content_tag :div, video_iframe, class: 'embed-responsive embed-responsive-16by9'
-  	else
-  		image_tag object.photo.large.url
-  	end
+    if object.video.present?
+      content_tag :div, video_iframe, class: 'embed-responsive embed-responsive-16by9'
+    else
+      image_tag object.photo.large.url
+    end
   end
 
   def video_iframe
-  	content_tag :iframe, src: object.video, allowfullscreen: '', class: 'embed-responsive-item'
+    content_tag :iframe, src: object.video, allowfullscreen: '', class: 'embed-responsive-item'
   end
 
   def admin_links
