@@ -1,5 +1,4 @@
 FROM phusion/passenger-ruby21
-MAINTAINER Firmhouse "stephen@oak.io"
 
 ENV HOME /root
 ENV RAILS_ENV production

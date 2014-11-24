@@ -63,12 +63,12 @@ private
       @org = Org.find_by_slug(params[:org]) || not_found
       @projects = @org.projects
     else
-      @projects = Project.all
+      @projects = Project.eager_load(:org)
     end
   end
 
   def set_project
-    @project = Project.find_by_slug(params[:id]).decorate || not_found
+    @project = Project.eager_load(:org, :rewards).find_by_slug(params[:id]).decorate || not_found
   end
 
   def project_params
